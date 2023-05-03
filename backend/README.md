@@ -4,5 +4,5 @@
 
 ### What you need to do first
 ---
-1. Rename ".env.example" -> ".env"
+1. Rename `.env.example` -> `.env`
 2. Fill out environment variables (API Keys etc.)

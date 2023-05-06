@@ -4,3 +4,7 @@
 
 This project contains the starter files for [Hello World Part 4 tutorial](https://docs.alchemy.com/alchemy/tutorials/hello-world-smart-contract/creating-a-full-stack-dapp), in which we teach you how to create a full stack dApp by connecting your Hello World smart contract to a React frontend using Metamask and Web3 tools.
 
+### What you need to do first
+---
+1. Rename `.env.example` -> `.env`
+2. Fill out environment variables (API Keys etc.)

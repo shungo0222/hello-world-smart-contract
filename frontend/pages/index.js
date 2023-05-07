@@ -1,4 +1,5 @@
 import React from "react";
+import Image from 'next/image'
 import { useEffect, useState } from "react";
 import {
   helloWorldContract,
@@ -6,24 +7,27 @@ import {
   updateMessage,
   loadCurrentMessage,
   getCurrentWalletConnected,
-} from "./util/interact.js";
+} from "../util/interact.js";
 
-import alchemylogo from "./alchemylogo.svg";
+import alchemylogo from "../public/alchemylogo.svg";
 
-const HelloWorld = () => {
+export default function Home() {
   //state variables
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
   const [message, setMessage] = useState("No connection to the network."); //default message
   const [newMessage, setNewMessage] = useState("");
 
-  //called only once
-  useEffect(async () => {
-    
-  }, []);
-
-  function addSmartContractListener() { //TODO: implement
-    
+  function addSmartContractListener() {
+    helloWorldContract.events.UpdatedMessages({}, (error, data) => {
+      if (error) {
+        setStatus("😥 " + error.message);
+      } else {
+        setMessage(data.returnValues[1]);
+        setNewMessage("");
+        setStatus("🎉 Your message has been updated!");
+      }
+    });
   }
 
   function addWalletListener() { //TODO: implement
@@ -38,10 +42,20 @@ const HelloWorld = () => {
     
   };
 
+  //called only once
+  useEffect(() => {
+    async function fetchMessage() {
+      const message = await loadCurrentMessage();
+      setMessage(message);
+    }
+    fetchMessage();
+    addSmartContractListener();
+  }, []);
+
   //the UI of our component
   return (
     <div id="container">
-      <img id="logo" src={alchemylogo}></img>
+      <Image id="logo" alt="alchemy" src={alchemylogo}></Image>
       <button id="walletButton" onClick={connectWalletPressed}>
         {walletAddress.length > 0 ? (
           "Connected: " +
@@ -73,6 +87,4 @@ const HelloWorld = () => {
       </div>
     </div>
   );
-};
-
-export default HelloWorld;
+}

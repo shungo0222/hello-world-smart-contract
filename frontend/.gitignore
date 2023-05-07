@@ -65,9 +65,6 @@ typings/
 # Next.js build output
 .next
 
-
 # Lock files
 package-lock.json
 yarn.lock
-
-templates/evm/core/pages/api

@@ -61,8 +61,9 @@ export default function Home() {
     setWallet(walletResponse.address);
   };
 
-  const onUpdatePressed = async () => { //TODO: implement
-    
+  const onUpdatePressed = async () => {
+    const { status } = await updateMessage(walletAddress, newMessage);
+    setStatus(status);
   };
 
   //called only once

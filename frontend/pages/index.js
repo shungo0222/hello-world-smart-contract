@@ -52,6 +52,13 @@ export default function Home() {
     }
     fetchMessage();
     addSmartContractListener();
+
+    async function fetchWallet() {
+      const {address, status} = await getCurrentWalletConnected();
+      setWallet(address);
+      setStatus(status); 
+    }
+    fetchWallet();
   }, []);
 
   //the UI of our component

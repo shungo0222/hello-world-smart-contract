@@ -18,8 +18,16 @@ export default function Home() {
   const [message, setMessage] = useState("No connection to the network."); //default message
   const [newMessage, setNewMessage] = useState("");
 
-  function addSmartContractListener() { //TODO: implement
-    
+  function addSmartContractListener() {
+    helloWorldContract.events.UpdatedMessages({}, (error, data) => {
+      if (error) {
+        setStatus("😥 " + error.message);
+      } else {
+        setMessage(data.returnValues[1]);
+        setNewMessage("");
+        setStatus("🎉 Your message has been updated!");
+      }
+    });
   }
 
   function addWalletListener() { //TODO: implement
@@ -41,6 +49,7 @@ export default function Home() {
       setMessage(message);
     }
     fetchMessage();
+    addSmartContractListener();
   }, []);
 
   //the UI of our component
